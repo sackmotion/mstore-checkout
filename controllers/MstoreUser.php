@@ -103,6 +103,13 @@ class JSON_API_MStore_User_Controller
                     $_REQUEST['user_login'] = $username;
                     $_REQUEST['user_email'] = $email;
 
+                    if (!$json_api->query->email_notification) {
+                        $_REQUEST['email_notification'] = 0;
+                    }else{
+                        $_REQUEST['email_notification'] = 1;
+                    }
+
+
                     $allowed_params = array('user_login', 'user_email', 'user_pass', 'display_name', 'user_nicename', 'user_url', 'nickname', 'first_name',
                         'last_name', 'description', 'rich_editing', 'user_registered', 'role', 'jabber', 'aim', 'yim',
                         'comment_shortcuts', 'admin_color', 'use_ssl', 'show_admin_bar_front'
@@ -125,7 +132,14 @@ class JSON_API_MStore_User_Controller
                     } elseif ($_REQUEST['notify'] != 'no') $notify = $_REQUEST['notify'];
 
 
-                    if ($user_id) wp_new_user_notification($user_id, '', $notify);
+
+                   if ($user_id) {
+                       wp_new_user_notification($user_id, '', $notify);
+                       // Add custom data using meta
+                       add_user_meta( $user_id, 'stripe_customer', -1);
+                       add_user_meta( $user_id, 'email_notification', $_REQUEST['email_notification']);
+                   }
+
 
 
                 }
