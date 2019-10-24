@@ -110,7 +110,7 @@ class JSON_API_MStore_User_Controller
                     }
 
                     if (!$json_api->query->stripe_customer_id) { 
-                        $_REQUEST['stripe_customer_id'] = -1;
+                        $_REQUEST['stripe_customer_id'] = '';
                     }
 
                     $allowed_params = array('user_login', 'user_email', 'user_pass', 'display_name', 'user_nicename', 'user_url', 'nickname', 'first_name',
