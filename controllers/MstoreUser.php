@@ -135,15 +135,12 @@ class JSON_API_MStore_User_Controller
                     } elseif ($_REQUEST['notify'] != 'no') $notify = $_REQUEST['notify'];
 
 
-
                    if ($user_id) {
                        wp_new_user_notification($user_id, '', $notify);
                        // Add custom data using meta
                        add_user_meta( $user_id, 'stripe_customer_id', $_REQUEST['stripe_customer_id']);
                        add_user_meta( $user_id, 'email_notification', $_REQUEST['email_notification']);
                    }
-
-
 
                 }
             }
@@ -232,7 +229,7 @@ class JSON_API_MStore_User_Controller
 
         $cookie = wp_generate_auth_cookie($user->ID, $expiration, 'logged_in');
 
-        preg_match('|src="(.+?)"|', get_avatar($user->ID, 512), $avatar);
+        //preg_match('|src="(.+?)"|', get_avatar($user->ID, 512), $avatar);
 
         return array(
             "cookie" => $cookie,
@@ -249,9 +246,8 @@ class JSON_API_MStore_User_Controller
                 "lastname" => $user->last_name,
                 "nickname" => $user->nickname,
                 "description" => $user->user_description,
-                "capabilities" => $user->wp_capabilities,
-                "avatar" => $avatar[1]
-
+                "capabilities" => $user->wp_capabilities
+                //"avatar" => $avatar[1]
             ),
         );
     }
@@ -574,7 +570,7 @@ class JSON_API_MStore_User_Controller
             $json_api->error("Invalid authentication cookie. Use the `generate_auth_cookie` Auth API method.");
         }
         $user = get_userdata($user_id);
-        preg_match('|src="(.+?)"|', get_avatar( $user->ID, 32 ), $avatar);
+        //preg_match('|src="(.+?)"|', get_avatar( $user->ID, 32 ), $avatar);
         return array(
             "user" => array(
                 "id" => $user->ID,
@@ -588,8 +584,8 @@ class JSON_API_MStore_User_Controller
                 "lastname" => $user->last_name,
                 "nickname" => $user->nickname,
                 "description" => $user->user_description,
-                "capabilities" => $user->wp_capabilities,
-                "avatar" => $avatar[1]
+                "capabilities" => $user->wp_capabilities
+                //"avatar" => $avatar[1]
             )
         );
     }
