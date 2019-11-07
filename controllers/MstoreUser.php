@@ -291,7 +291,7 @@ class JSON_API_MStore_User_Controller
 
                     while (username_exists($user_name)) {
                         $i++;
-                        $user_name = strtolower($json_api->query->first_name . '.' . $json_api->query->last_name . '.' . $i;
+                        $user_name = strtolower($json_api->query->first_name . '.' . $json_api->query->last_name) . '.' . $i;
 
                     }
 
