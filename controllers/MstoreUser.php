@@ -267,12 +267,11 @@ class JSON_API_MStore_User_Controller
             $json_api->error("You must include a 'id' variable. Get the valid id for this app from Google SignIn.");
         } else {
 
-            
-
             if ($json_api->query->email) {
 
                 $user_email = $json_api->query->email;
                 $email_exists = email_exists($user_email);
+                $user_id = 0;
 
                 if ($email_exists) {
                     $user = get_user_by('email', $user_email);
@@ -370,6 +369,7 @@ class JSON_API_MStore_User_Controller
 
                 $user_email = $result["email"];
                 $email_exists = email_exists($user_email);
+                $user_id = 0;
 
                 if ($email_exists) {
                     $user = get_user_by('email', $user_email);
@@ -450,6 +450,8 @@ class JSON_API_MStore_User_Controller
                 $user_name = $result["phone"]["number"];
                 $user_email = $result["phone"]["number"]."@mstore.io";
                 $email_exists = email_exists($user_email);
+
+                $user_id = 0;
 
                 if ($email_exists) {
                     $user = get_user_by('email', $user_email);
