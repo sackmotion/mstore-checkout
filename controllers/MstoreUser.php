@@ -284,6 +284,7 @@ class JSON_API_MStore_User_Controller
 
                     $user_name = strtolower($json_api->query->first_name . '.' . $json_api->query->last_name);
 
+                    $i = 0;
                     while (username_exists($user_name)) {
                         $i++;
                         $user_name = strtolower($json_api->query->first_name . '.' . $json_api->query->last_name) . '.' . $i;
@@ -381,6 +382,7 @@ class JSON_API_MStore_User_Controller
                 if (!$user_id && $email_exists == false) {
 
                     $user_name = strtolower($result['first_name'] . '.' . $result['last_name']);
+                    $i = 0;
 
                     while (username_exists($user_name)) {
                         $i++;
