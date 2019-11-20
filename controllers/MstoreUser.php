@@ -353,17 +353,30 @@ class JSON_API_MStore_User_Controller
 
             $url = 'https://graph.facebook.com/me/?fields=' . $fields . '&access_token=' . $json_api->query->access_token;
 
-
+            //  Initiate curl
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            $result = curl_exec($ch);
-            curl_close($ch);
 
+            if (!$json_api->query->update) {                
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            }else{
+                // Enable SSL verification
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $enable_ssl);
+                // Will return the response, if false it print the response
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                // Set the url
+                curl_setopt($ch, CURLOPT_URL,$url);
+            }
+           
+            // Execute
+            $result=curl_exec($ch);
+            // Closing
+            curl_close($ch);
+            
             $result = json_decode($result, true);
 
             if (isset($result["email"])) {
